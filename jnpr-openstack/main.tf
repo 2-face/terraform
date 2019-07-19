@@ -243,7 +243,7 @@ module "vsrx01" {
     net_name_0 = "${var.ns_net_ten["p2p_vmx01_vsrx01_net_name"]}"
     subnet_name_0 = "${var.ns_net_ten["p2p_vmx01_vsrx01_subnet_name"]}"
     subnet_cidr_0 = "${var.ns_net_ten["p2p_vmx01_vsrx01_subnet_cidr"]}"
-    port_name_0 = "corpo-vsrx01-vfp-p2p-vmx01-vsrx01-port"
+    port_name_0 = "vsrx01-vfp-p2p-vmx01-vsrx01-port"
     port_ip_0 = "10.0.0.2"
 
   }

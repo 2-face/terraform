@@ -28,6 +28,7 @@ Following prerequisites must be met to run this tutorial (*tested environment*):
 
 ### Installing
 After meeting the prerequsites the following information shall be obtained for terraform openstack provider:
+
 |Parameter|Script parameter |Example value |
 |---|---|---|
 |OpenStack User Name |osp_user_name |admin  |
@@ -37,6 +38,7 @@ After meeting the prerequsites the following information shall be obtained for t
 |OpenStack Region   |osp_region |regionOne  |
 |OpenStack Project Domain Name |osp_project_domain_name |default |
 |OpenStack User Domain Name |osp_user_domain_name |Default  |
+
 
 <br></br>
 Generate public/private key-pair into *bootstrap_cfg* directory - it will be used to connect to both vSRX and vMX:
