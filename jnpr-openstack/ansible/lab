@@ -1,0 +1,12 @@
+# file: lab
+
+[firewalls]
+vsrx01 ansible_host=192.168.100.204
+
+[routers]
+vmx01-vcp ansible_host=192.168.100.200
+
+#Hostgroup <-> ansible group
+[junos:children]
+routers
+firewalls

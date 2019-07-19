@@ -1,0 +1,69 @@
+---
+# file: vmx01-vcp.yml
+- name: Manipulate the configuration of Junos devices
+  hosts: vsrx01
+  connection: local
+  gather_facts: no
+  roles:
+    - Juniper.junos
+  tasks:
+    - name: Configure IP addressing.
+      juniper_junos_config:
+        provider: "{{ credentials }}"
+        load: 'merge'
+        lines:
+          - 'set interfaces ge-0/0/0 unit 0 family inet address 10.0.0.2/30'
+          - 'set interfaces ge-0/0/0 description P2P-VMX01-VSRX01-NET'
+        format: 'set'
+        retrieve: 'candidate'
+        filter: 'interfaces'
+        comment: 'Configure IP addressing'
+        dest_dir: './output'
+        #dest: "./output/{{ inventory_hostname }}.commands.ipaddressing.output"
+      register: response
+    - name: Print the complete response.
+      debug:
+        var: response
+
+    - name: Set security zone.
+      juniper_junos_config:
+        provider: "{{ credentials }}"
+        load: 'merge'
+        lines:
+          - 'set security zones security-zone trust interfaces ge-0/0/0.0'
+          - 'set security zones security-zone trust host-inbound-traffic system-services all'
+          - 'set security zones security-zone trust host-inbound-traffic protocols all'
+        format: 'set'
+        retrieve: 'candidate'
+        filter: 'security'
+        comment: 'Set security zone'
+        dest_dir: './output'
+        #dest: "./output/{{ inventory_hostname }}.commands.securityzone.output"
+      register: response
+    - name: Print the complete response.
+      debug:
+        var: response
+
+    - name: Restart FPC.
+      juniper_junos_command:
+        provider: "{{ credentials }}"
+        commands:
+          - "request chassis fpc restart slot 0"
+      register: response
+    - name: Print the complete response.
+      debug:
+        var: response
+
+
+    - name: Update MTU with Jinja2 template.
+      juniper_junos_config:
+        provider: "{{ credentials }}"
+        load: 'merge'
+        #Extension has to be .conf
+        template: "j2/vsrx-mtu.conf"
+        vars:
+          interface_count: 1
+      register: response
+    - name: Print the complete response.
+      debug:
+        var: response

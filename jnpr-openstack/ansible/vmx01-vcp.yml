@@ -1,0 +1,41 @@
+---
+# file: vmx01-vcp.yml
+- name: Manipulate the configuration of Junos devices
+  hosts: vmx01-vcp
+  connection: local
+  gather_facts: no
+  roles:
+    - Juniper.junos
+  tasks:
+    - name: Configure IP addressing.
+      juniper_junos_config:
+        provider: "{{ credentials }}"
+        load: 'merge'
+        lines:
+          - 'set interfaces ge-0/0/0 unit 0 family inet address 10.0.0.1/30'
+          - 'set interfaces ge-0/0/0 description P2P-VMX01-VSRX01-NET'
+          - 'set interfaces ge-0/0/1 unit 0 family inet address 10.128.0.1/30'
+          - 'set interfaces ge-0/0/1 description P2P-VMX01-RTR01-NET'
+        format: 'set'
+        retrieve: 'candidate'
+        filter: 'interfaces'
+        comment: 'Configure IP addressing'
+        dest_dir: './output'
+        #dest: "./output/{{ inventory_hostname }}.commands.ipaddressing.output"
+      register: response
+    - name: Print the complete response.
+      debug:
+        var: response
+
+    - name: Update MTU with Jinja2 template.
+      juniper_junos_config:
+        provider: "{{ credentials }}"
+        load: 'merge'
+        #Extension has to be .conf
+        template: "j2/vmx-mtu.conf"
+        vars:
+          interface_count: 2
+      register: response
+    - name: Print the complete response.
+      debug:
+        var: response

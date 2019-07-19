@@ -1,0 +1,5 @@
+---
+# file: site.yml
+# This file defines whole infrastructure to be configured with ansible
+- import_playbook: vmx01-vcp.yml
+- import_playbook: vsrx01.yml

@@ -1,0 +1,15 @@
+---
+  remote_user: "admin"
+  #With private key it didn't work if Ansible used IP for connection rather that hostname i.e. playbook was ending with
+  #"msg": "Unable to make a PyEZ connection: ConnectAuthError(192.168.100.200)"
+  remote_pass: "P@$$w0rd321!"
+  #not sure if that's needed at all
+  ansible_network_os: "junos"
+
+  credentials:
+    #ansible_host value taken from ini file
+    host: "{{ ansible_host }}"
+    port: "830"
+    username: "{{ remote_user }}"
+    password: "{{ remote_pass }}"
+    ssh_keyfile: "{{ ansible_ssh_private_key_file }}"

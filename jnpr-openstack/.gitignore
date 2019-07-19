@@ -1,0 +1,17 @@
+.terraform
+.vscode
+.DS_Store
+modules/vsrx/.terraform
+modules/vsrx/*.tfstate
+modules/net/.terraform
+modules/net/*.tfstate
+modules/vmx/.terraform
+modules/vmx/*.tfstate
+modules/img/.terraform
+modules/img/*.tfstate
+bootstrap_cfg/id_ed25519
+bootstrap_cfg/id_ed25519.pub
+*.tfstate
+ansible/output/*
+architecture.graffle
+architecture.graffle/*
